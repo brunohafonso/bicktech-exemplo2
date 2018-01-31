@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BikeTech - Exemplo</title>
+        <meta charset="utf-8"/>
+        <style>
+            html, body, #map {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+            
+            
+            .topo {
+                width: 100%;
+                height: 75px;
+                background-color: #313131;
+            }
+            
+            .topo input {
+                width: 450px;
+                height: 30px;
+                line-height: 30px;
+                margin: 22.2px 15px auto;
+                z-index: 999;
+            }
+        </style>
+    </head>
+    <body onload="iniciarMapa()">
+        <div class="topo">
+            <input id="origem" type="text" placeholder="Digite o nome do local"/>
+        </div>
+        <div id="map"></div>
+        <div id="detalhes"></div>
+        <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6s0UwIy7egNSDfkm5CJCxFi-8KfEnw8U"></script>-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6s0UwIy7egNSDfkm5CJCxFi-8KfEnw8U&libraries=places" async defer></script>
+        <script src="maps.js"></script>
+        <script>
+            // function iniciarMapa() {
+            //     var map;
+            //     var mapa = document.querySelector("#map");
+            //     var detalhes = document.querySelector("#detalhes");
+            //     map = new google.maps.Map(mapa, {
+            //         center: new google.maps.LatLng(-23.64792232790984,-46.59668872883606),
+            //         mapTypeId: google.maps.MapTypeId.ROADMAP,
+            //         zoom: 10,
+            //         styles:[
+            //             {
+            //                 "featureType": "administrative",
+            //                 "elementType": "labels.text.fill",
+            //                 "stylers": [
+            //                     {
+            //                         "color": "#444"
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 "featureType": "landscape",
+            //                 "elementType": "all",
+            //                 "stylers": [
+            //                     {
+            //                         "color": "#d3d3d3"
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 "featureType": "poi",
+            //                 "elementType": "all",
+            //                 "stylers": [
+            //                     {
+            //                         "visibility": "on"
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 "featureType": "road",
+            //                 "elementType": "all",
+            //                 "stylers": [
+            //                     {
+            //                         "saturation": -100
+            //                     },
+            //                     {
+            //                         "lightness": 45
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 "featureType": "road.highway",
+            //                 "elementType": "all",
+            //                 "stylers": [
+            //                     {
+            //                         "visibility": "simplified"
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 "featureType": "road.arterial",
+            //                 "elementType": "labels.icon",
+            //                 "stylers": [
+            //                     {
+            //                         "visibility": "on"
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 "featureType": "transit",
+            //                 "elementType": "all",
+            //                 "stylers": [
+            //                     {
+            //                         "visibility": "on"
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 "featureType": "water",
+            //                 "elementType": "all",
+            //                 "stylers": [
+            //                     {
+            //                         "color": "#00aced"
+            //                     },
+            //                     {
+            //                         "visibility": "on"
+            //                     }
+            //                 ]
+            //             }
+            //         ]
+
+            //     });
+                
+                
+                
+            //     var routes = [
+            //         { 
+            //             origin: new google.maps.LatLng(-23.64792232790984,-46.59668872883606),
+            //     		destination: new google.maps.LatLng(-23.60306342113649,-46.602692054244926),
+            //             travelMode: google.maps.TravelMode.BICYCLING
+            //         },
+            //         {
+            //     		origin: new google.maps.LatLng(-23.60306342113649,-46.602692054244926),
+            //     		destination: new google.maps.LatLng(-23.536552929531982,-46.646301258895505),
+            //             travelMode: google.maps.TravelMode.TRANSIT
+            //         }
+            //     ];
+                
+            //     var bike = {
+            //         icon: new google.maps.MarkerImage(
+            //             'bike.png',
+            //             new google.maps.Size( 100, 100 ),
+            //           // The origin point (x,y)
+            //           new google.maps.Point( 0, 0 ),
+            //           // The anchor point (x,y)
+            //           new google.maps.Point( 22, 32 )
+            //         )
+            //     };
+                
+            //     var bus = {
+            //         icon: new google.maps.MarkerImage(
+            //             'bus.png',
+            //             new google.maps.Size( 100, 100 ),
+            //           // The origin point (x,y)
+            //           new google.maps.Point( 0, 0 ),
+            //           // The anchor point (x,y)
+            //           new google.maps.Point( 17, 27 )
+            //         )
+            //     };
+                
+            //     function makeMarker(position, icon) {
+            //         new google.maps.Marker({
+            //             position: position,
+            //             map: map,
+            //             icon: icon
+            //         });
+            //     }
+                
+            //     routes.forEach(function(route) {
+            //         new google.maps.DirectionsService().route(route, function(body) {
+            //             var color;
+            //             if(route.travelMode == "BICYCLING") {
+            //                 color = '#17a2b8';
+            //                 makeMarker(routes[0].origin, bike.icon);
+            //             } else if(route.travelMode == "TRANSIT") {
+            //                 color = '#ffc107';
+            //                 makeMarker(routes[1].origin, bus.icon);
+            //                 makeMarker(routes[1].destination, bus.icon);
+            //             } else {
+            //                 color = '#259521';
+            //             }
+                        
+            //             var pOptions = new google.maps.Polyline({ strokeColor: '#000', });
+                        
+            //             var display = new google.maps.DirectionsRenderer({ 
+            //                 suppressMarkers: true,
+                            
+            //                 polylineOptions: { 
+            //                     strokeColor: color, 
+            //                     strokeWeight: 7, 
+            //                     strokeOpacity: 0.7 
+            //                 } 
+            //             });
+            //             display.setPanel(detalhes);
+            //             display.setMap(map);
+            //             display.setDirections(body);
+            //         });
+            //     });
+            // }
+        </script>
+    </body>
+</html>
